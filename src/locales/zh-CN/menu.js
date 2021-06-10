@@ -6,8 +6,8 @@ export default {
   'menu.member': '用户管理',
   'menu.member.user-list': '用户列表',
   'menu.member.user-detail': '用户详情',
-  'menu.member.cricle-list': '圈子列表',
-  'menu.member.cricle-detail': '圈子详情',
+  'menu.member.circle-list': '圈子列表',
+  'menu.member.circle-detail': '圈子详情',
 
   // 内容管理
   'menu.content': '内容管理',

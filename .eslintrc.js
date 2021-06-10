@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: ['umi'],
+  extends: ['umi', 'prettier'],
   env: {
     browser: true,
     node: true,
@@ -10,6 +10,7 @@ module.exports = {
     jasmine: true,
   },
   rules: {
+    'radix': [0],
     'generator-star-spacing': [0],
     'consistent-return': [0],
     'react/forbid-prop-types': [0],
@@ -45,6 +46,8 @@ module.exports = {
     'function-paren-newline': [0],
     'no-restricted-globals': [0],
     'require-yield': [1],
+    'no-unused-expressions': [1],
+    'no-undef': [0]
   },
   parserOptions: {
     ecmaFeatures: {

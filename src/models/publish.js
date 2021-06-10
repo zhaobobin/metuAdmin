@@ -15,7 +15,7 @@ export default {
       const res = yield call(params => {
         return request('api/init', { method: 'POST', body: params });
       }, payload);
-      if (res.status === 1) {
+      if (res.code === 0) {
         yield put({
           type: 'changeAppInfo',
           payload: res,

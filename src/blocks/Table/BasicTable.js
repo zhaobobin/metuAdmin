@@ -15,11 +15,11 @@ export default class TableInit extends React.Component {
     this.state = {
       loading: false,
       list: [],
-      total: null,
+      total: 0,
 
       queryParams: {
-        pageNum: 1,
-        pageSize: Storage.get(ENV.storagePagesize) || 10,
+        page: 1,
+        per_page: Storage.get(ENV.storagePagesize) || 10,
       },
     };
   }
@@ -44,32 +44,31 @@ export default class TableInit extends React.Component {
   queryList(queryParams) {
     if (!this.ajaxFlag) return;
     this.ajaxFlag = false;
-
     this.setState({ loading: true });
 
     const { uid } = this.props.global.currentUser;
-    const { pageNum, pageSize } = this.state.queryParams;
+    const { page, per_page } = this.state.queryParams;
 
     this.props.dispatch({
-      type: 'global/post',
+      type: 'global/request',
       url: this.props.params.api,
+      method: 'GET',
       payload: {
-        uid,
-        pageNum,
-        pageSize,
-        params: queryParams,
+        page,
+        per_page,
+        ...queryParams,
       },
       callback: res => {
         this.ajaxFlag = true;
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.setState({
             loading: false,
             list: res.data.list,
-            total: res.data.total,
+            total: res.data.count || res.data.total,
             queryParams: {
               ...queryParams,
-              pageNum: queryParams.pageNum || pageNum,
-              pageSize: queryParams.pageSize || pageSize,
+              page: queryParams.page || page,
+              per_page: queryParams.per_page || per_page,
             },
           });
           if (this.props.callback) this.props.callback(res.data);
@@ -85,15 +84,14 @@ export default class TableInit extends React.Component {
     Storage.set(ENV.storagePagesize, pagination.pageSize);
     this.queryList({
       ...this.state.queryParams,
-      pageNum: pagination.current,
-      pageSize: pagination.pageSize,
+      page: pagination.current,
+      per_page: pagination.pageSize,
     });
   };
 
   render() {
     const { loading, list, total, queryParams } = this.state;
     const { columns } = this.props.params;
-
     return (
       <div style={{ padding: '20px 0' }}>
         <Table
@@ -105,16 +103,16 @@ export default class TableInit extends React.Component {
           rowSelection={this.props.rowSelection}
           pagination={{
             total: total,
-            current: queryParams.pageNum,
-            pageSize: queryParams.pageSize,
+            current: queryParams.page,
+            pageSize: queryParams.per_page,
             hideOnSinglePage: false,
             showSizeChanger: true,
             showTotalText: true,
             showTotal: () => (
               <TableShowTotal
                 total={total}
-                pageNum={queryParams.pageNum}
-                pageSize={queryParams.pageSize}
+                pageNum={queryParams.page}
+                pageSize={queryParams.per_page}
               />
             ),
           }}

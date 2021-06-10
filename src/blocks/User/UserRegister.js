@@ -154,7 +154,7 @@ export default class UserRegister extends React.Component {
       type: 'global/register',
       payload: data,
       callback: res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.props.callback();
         } else {
           if (res.status > 10000) {

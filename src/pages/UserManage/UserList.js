@@ -15,12 +15,12 @@ export default class UserList extends React.Component {
     this.ajaxFlag = true;
     this.state = {
       queryParams: {
-        userType: 'user',
+        type: 'user',
       },
-      apiList: '/api/UserList',
-      apiAdd: '/api/UserAdd',
-      apiEdit: '/api/UserUpdate',
-      apiDel: '/api/UserDel',
+      apiList: '/users',
+      apiAdd: '/UserAdd',
+      apiEdit: '/UserUpdate',
+      apiDel: '/UserDel',
 
       modalVisible: false,
       modalAction: '',
@@ -307,7 +307,7 @@ export default class UserList extends React.Component {
         align: 'center',
         render: (text, item) => (
           <div>
-            {currentUser.userType === 'admin' ? (
+            {currentUser.type === 'admin' ? (
               <span>
                 <a onClick={() => this.edit(item)}>编辑</a>
                 {item.user_name === 'admin' ? null : <span> | </span>}
@@ -329,7 +329,7 @@ export default class UserList extends React.Component {
       <div>
         <FormInit layout="horizontal" params={searchParams} callback={this.formCallback} />
 
-        {currentUser.userType === 'admin' ? (
+        {currentUser.type === 'admin' ? (
           <div style={{ padding: '20px 0' }}>
             <Button type="primary" onClick={this.add}>
               添加{modalTitle}

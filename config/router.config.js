@@ -49,15 +49,15 @@ export default [
             component: './UserManage/UserDetail',
           },
           {
-            path: 'cricle',
-            name: 'cricle-list',
-            component: './UserManage/CricleList',
+            path: 'circle',
+            name: 'circle-list',
+            component: './UserManage/CircleList',
           },
           {
-            path: '/cricle/detail/:id',
-            name: 'cricle-detail',
+            path: '/circle/detail/:id',
+            name: 'circle-detail',
             hideInMenu: true,
-            component: './UserManage/CricleDetail',
+            component: './UserManage/CircleDetail',
           },
         ]
       },

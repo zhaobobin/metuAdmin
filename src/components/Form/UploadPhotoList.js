@@ -327,7 +327,7 @@ export default class UploadPhotoList extends Component {
       type: 'photo/add',
       payload: data,
       callback: res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.queryList();
           this.delOssList();
           this.setState({
@@ -349,7 +349,7 @@ export default class UploadPhotoList extends Component {
         params: {},
         sort: '',
         currentPage: 1,
-        pageSize: Storage.get('metu-pageSize') ? Storage.get('metu-pageSize') : 10,
+        per_page: Storage.get('metu-pageSize') ? Storage.get('metu-pageSize') : 10,
       },
       callback: res => {},
     });

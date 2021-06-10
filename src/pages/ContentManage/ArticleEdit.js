@@ -39,7 +39,7 @@ export default class ArticleEdit extends React.Component {
         setTimeout(() => {
           this.ajaxFlag = true;
         }, 500);
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.setState({
             loading: false,
             detail: res.data,

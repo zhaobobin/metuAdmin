@@ -5,8 +5,8 @@ export default {
   'menu.member': 'Member',
   'menu.member.user-list': 'User List',
   'menu.member.user-detail': 'User Detail',
-  'menu.member.cricle-list': 'Cricle List',
-  'menu.member.cricle-detail': 'Cricle Detail',
+  'menu.member.circle-list': 'Circle List',
+  'menu.member.circle-detail': 'Circle Detail',
 
   'menu.content': 'Content Manage',
   'menu.content.article-list': 'Article List',

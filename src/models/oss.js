@@ -104,7 +104,7 @@ export default {
       const res = yield call(params => {
         return request('/api/FileOssEdit', { method: 'POST', body: params });
       }, {});
-      if (res.status === 1) {
+      if (res.code === 0) {
         let client = getClient(res.data);
         client
           .multipartUpload(payload.key, payload.file, {})
@@ -126,7 +126,7 @@ export default {
       const res = yield call(params => {
         return request('/api/FileOssEdit', { method: 'POST', body: params });
       }, {});
-      if (res.status === 1) {
+      if (res.code === 0) {
         let client = getClient(res.data);
 
         let dataUrl = payload.base64;
@@ -164,7 +164,7 @@ export default {
       const res = yield call(params => {
         return request('/api/FileOssEdit', { method: 'POST', body: params });
       }, {});
-      if (res.status === 1) {
+      if (res.code === 0) {
         let client = getClient(res.data);
         client.deleteMulti(payload.keys).catch(function(err) {
           notification.error({

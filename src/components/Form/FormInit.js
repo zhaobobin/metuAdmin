@@ -68,6 +68,7 @@ export default class FormInit extends PureComponent {
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields('', (err, values) => {
+      console.log(err);
       if (err) return;
       // this.props.form.resetFields();
       this.props.callback(values);
@@ -207,7 +208,6 @@ export default class FormInit extends PureComponent {
         ))}
       </Row>
     ));
-
     return (
       <div className={styles.formInit}>
         {modal ? (

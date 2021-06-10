@@ -61,7 +61,9 @@ export default function Request(url, options) {
     };
     let query = '';
     for (let i in options.body) {
-      query += i + '=' + options.body[i] + '&';
+      if (options.body[i]) {
+        query += i + '=' + options.body[i] + '&';
+      }
     }
     query = query.substring(0, query.length - 1);
     if (query) url = `${url}?${query}`;

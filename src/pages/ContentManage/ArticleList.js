@@ -17,10 +17,10 @@ export default class ArticleList extends React.Component {
       queryParams: {
         userType: 'user',
       },
-      apiList: '/api/ArticleList',
-      apiAdd: '/api/ArticleAdd',
-      apiEdit: '/api/ArticleUpdate',
-      apiDel: '/api/ArticleDel',
+      apiList: '/articles',
+      apiAdd: '/articleAdd',
+      apiEdit: '/articleUpdate',
+      apiDel: '/articleDel',
 
       modalVisible: false,
       modalAction: '',
@@ -225,10 +225,10 @@ export default class ArticleList extends React.Component {
       },
       {
         title: '作者',
-        dataIndex: 'uid',
-        key: 'uid',
+        dataIndex: 'author',
+        key: 'author',
         align: 'center',
-        render: uid => <span>{uid.nickname}</span>,
+        render: author => <span>{author ? author.nickname : null}</span>,
       },
       {
         title: '状态',
@@ -244,7 +244,7 @@ export default class ArticleList extends React.Component {
         align: 'center',
         render: (text, item) => (
           <div>
-            {currentUser.userType === 'admin' ? (
+            {currentUser.type === 'admin' ? (
               <span>
                 <a onClick={() => this.edit(item._id)}>编辑</a>
                 {item.user_name === 'admin' ? null : <span> | </span>}
@@ -269,7 +269,7 @@ export default class ArticleList extends React.Component {
       <div>
         <FormInit layout="horizontal" params={searchParams} callback={this.formCallback} />
 
-        {currentUser.userType === 'admin' ? (
+        {currentUser.type === 'admin' ? (
           <div style={{ padding: '20px 0' }}>
             <Button type="primary" onClick={this.add}>
               添加{modalTitle}

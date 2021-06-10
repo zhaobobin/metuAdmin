@@ -5,23 +5,33 @@ import React from 'react';
 import { connect } from 'dva';
 import { Button, Popconfirm } from 'antd';
 import moment from 'moment';
+import Storage from '@/utils/storage';
 
 import FormInit from '@/components/Form/FormInit';
 import TableInit from '@/blocks/Table/BasicTable';
 
+const CircleCategory = {
+  interest: '兴趣', // 兴趣圈
+  learn: '学习', // 学习圈
+  campus: '校园', //校区圈
+  region: '地域', //地域圈
+};
+
 @connect(({ global }) => ({
   global,
 }))
-export default class CricleList extends React.Component {
+export default class CircleList extends React.Component {
   constructor(props) {
     super(props);
     this.ajaxFlag = true;
     this.state = {
-      queryParams: {},
-      apiList: '/api/CricleList',
-      apiAdd: '/api/CricleAdd',
-      apiEdit: '/api/CricleUpdate',
-      apiDel: '/api/CricleDel',
+      queryParams: {
+        per_page: Storage.get('metu-pageSize') ? Storage.get('metu-pageSize') : 10,
+      },
+      apiList: '/circles',
+      apiAdd: '/CircleAdd',
+      apiEdit: '/CircleUpdate',
+      apiDel: '/CircleDel',
 
       modalVisible: false,
       modalAction: '',
@@ -86,7 +96,7 @@ export default class CricleList extends React.Component {
         setTimeout(() => {
           this.ajaxFlag = true;
         }, 500);
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.tableInit.refresh({});
           this.setState({
             modalVisible: false,
@@ -113,7 +123,7 @@ export default class CricleList extends React.Component {
         setTimeout(() => {
           this.ajaxFlag = true;
         }, 500);
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.tableInit.refresh({});
         }
       },
@@ -135,6 +145,10 @@ export default class CricleList extends React.Component {
   render() {
     const { currentUser } = this.props.global;
     const { apiList, queryParams, modalVisible, modalAction, pageTitle, modalValues } = this.state;
+    const CircleCategoryOptions = Object.keys(CircleCategory).map(key => ({
+      label: CircleCategory[key],
+      value: key,
+    }));
 
     const searchParams = [
       [
@@ -196,7 +210,7 @@ export default class CricleList extends React.Component {
           inputType: 'Input',
           value: modalValues ? modalValues.name : undefined,
           placeholder: '请输入',
-          rules: [],
+          rules: [{ required: true }],
         },
         {
           key: 'tag',
@@ -226,6 +240,15 @@ export default class CricleList extends React.Component {
         },
         {
           key: 'status',
+          label: '分类',
+          type: 'Select',
+          value: modalValues ? modalValues.category : undefined,
+          placeholder: '请选择',
+          option: CircleCategoryOptions,
+          rules: [{ required: true }],
+        },
+        {
+          key: 'status',
           label: '状态',
           type: 'Select',
           value: modalValues ? modalValues.status : 1,
@@ -250,6 +273,17 @@ export default class CricleList extends React.Component {
         dataIndex: 'name',
         key: 'name',
         align: 'center',
+      },
+      {
+        title: '分类',
+        dataIndex: 'category',
+        key: 'category',
+        align: 'center',
+        render: category => (
+          <span>
+            {category} - {CircleCategory[category]}
+          </span>
+        ),
       },
       {
         title: '标签',
@@ -289,7 +323,7 @@ export default class CricleList extends React.Component {
         align: 'center',
         render: (text, item) => (
           <div>
-            {currentUser.userType === 'admin' ? (
+            {currentUser.type === 'admin' ? (
               <span>
                 <a onClick={() => this.edit(item)}>编辑</a>
                 <span> | </span>
@@ -309,7 +343,7 @@ export default class CricleList extends React.Component {
       <div>
         <FormInit layout="horizontal" params={searchParams} callback={this.formCallback} />
 
-        {currentUser.userType === 'admin' ? (
+        {currentUser.type === 'admin' ? (
           <div style={{ padding: '20px 0' }}>
             <Button type="primary" onClick={this.add}>
               添加{pageTitle}

@@ -8,12 +8,14 @@ _roadhog-api-doc
 
 # production
 /.vscode
+/dist
 
 # misc
 .DS_Store
 npm-debug.log*
 yarn-error.log
 
+/src/config/wechat.js
 /coverage
 .idea
 yarn.lock
