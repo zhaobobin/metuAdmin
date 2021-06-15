@@ -1,6 +1,12 @@
 import React from 'react';
 
-const TableShowTotal = ({ total, pageNum, pageSize }) => {
+interface ITableShowTotalProps {
+  total: number;
+  pageNum: number;
+  pageSize: number;
+}
+
+const TableShowTotal = ({ total, pageNum, pageSize }: ITableShowTotalProps) => {
   const precent = total % pageSize;
   const totalPage = Math.floor(total / pageSize);
   const spanStyle = { marginRight: '20px', color: '#888' };

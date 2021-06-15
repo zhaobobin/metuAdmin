@@ -5,14 +5,15 @@
  */
 const Storage = {
   // 保存
-  set: function(key, value) {
+  set: function(key: string, value: string) {
     let curTime = new Date().getTime();
     return window.localStorage.setItem(key, window.JSON.stringify({ data: value, time: curTime }));
   },
 
   // 查询
-  get: function(key, exp) {
-    let obj = window.JSON.parse(window.localStorage.getItem(key));
+  get: function(key: string, exp: number) {
+    const local = window.localStorage.getItem(key)
+    let obj = window.JSON.parse(local as string);
     if (!obj || !obj.data) return false; //无记录
     if (exp && new Date().getTime() - obj.time > exp * 1000) {
       //过期
@@ -23,7 +24,7 @@ const Storage = {
   },
 
   // 删除
-  remove: function(key) {
+  remove: function(key: string) {
     return window.localStorage.removeItem(key);
   },
 
@@ -33,7 +34,7 @@ const Storage = {
   },
 
   //设置cookie
-  setCookie: function(key, value, day) {
+  setCookie: function(key: string, value: string, day: number) {
     let t = day || 30;
     let d = new Date();
     d.setTime(d.getTime() + t * 24 * 60 * 60 * 1000);
@@ -42,7 +43,7 @@ const Storage = {
   },
 
   //获取cookie
-  getCookie: function(name) {
+  getCookie: function(name: string) {
     let arr,
       reg = new RegExp('(^|)' + name + '=([^]*)(|$)');
     if (arr === window.document.cookie.match(reg)) {

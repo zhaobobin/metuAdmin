@@ -1,13 +1,13 @@
 /**
  * 表单校验
  */
-const Validator = {
+ const Validator = {
   /**
    * Form字段错误检查
    * @param fieldsError
    * @returns {boolean}
    */
-  hasErrors: function(fieldsError) {
+  hasErrors: function (fieldsError: any) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   },
 
@@ -16,7 +16,7 @@ const Validator = {
    * @param tel
    * @returns {boolean}
    */
-  isMobile: function(tel) {
+  isMobile: function (tel: string) {
     let reg = /^1[0-9]{10}$/;
     return reg.test(tel);
   },
@@ -25,7 +25,7 @@ const Validator = {
    * 动态检查输入值是不是手机号，1开头并且 <= 11位数值返回true
    * @param value
    */
-  checkMobile: function(value) {
+  checkMobile: function (value: string) {
     if (value.substr(0, 1) === '1') {
       return value.length <= 11;
     } else {
@@ -38,7 +38,7 @@ const Validator = {
    * @param email
    * @returns {boolean}
    */
-  isEmail: function(email) {
+  isEmail: function (email: string) {
     let reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     return reg.test(email);
   },
@@ -48,7 +48,7 @@ const Validator = {
    * @param value
    * @returns {number}
    */
-  checkPsdLevel: function(value) {
+  checkPsdLevel: function (value: string) {
     // 0： 表示第一个级别， 1：表示第二个级别， 2：表示第三个级别， 3： 表示第四个级别， 4：表示第五个级别
     let modes = 0;
     if (value.length < 8) {
@@ -72,7 +72,7 @@ const Validator = {
       modes++;
     }
     return modes;
-  },
+  }
 };
 
 export default Validator;

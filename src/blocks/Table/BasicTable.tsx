@@ -5,11 +5,32 @@ import ENV from '@/config/env';
 import Storage from '@/utils/storage';
 import TableShowTotal from './TableShowTotal';
 
-@connect(({ global }) => ({
+interface IQueryParams {
+  page: number;
+  per_page: number;
+}
+
+interface IProps {
+  params: any;
+  onRef: any;
+  rowSelection: any;
+  callback: (data: any) => void;
+}
+
+interface IState {
+  loading: boolean;
+  list: any[];
+  total: number;
+  queryParams: IQueryParams;
+}
+
+@connect(({ global }: any) => ({
   global,
 }))
-export default class TableInit extends React.Component {
-  constructor(props) {
+export default class TableInit extends React.Component<IProps, IState> {
+  private ajaxFlag: boolean;
+
+  constructor(props: IProps) {
     super(props);
     this.ajaxFlag = true;
     this.state = {
@@ -29,7 +50,7 @@ export default class TableInit extends React.Component {
     this.queryList(this.props.params.queryParams);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: IProps) {
     if (
       JSON.stringify(nextProps.params.queryParams) !== JSON.stringify(this.props.params.queryParams)
     ) {
@@ -37,16 +58,15 @@ export default class TableInit extends React.Component {
     }
   }
 
-  refresh = queryParams => {
+  refresh = (queryParams: IQueryParams) => {
     this.queryList(queryParams);
   };
 
-  queryList(queryParams) {
+  queryList(queryParams: IQueryParams) {
     if (!this.ajaxFlag) return;
     this.ajaxFlag = false;
     this.setState({ loading: true });
 
-    const { uid } = this.props.global.currentUser;
     const { page, per_page } = this.state.queryParams;
 
     this.props.dispatch({
@@ -54,8 +74,6 @@ export default class TableInit extends React.Component {
       url: this.props.params.api,
       method: 'GET',
       payload: {
-        page,
-        per_page,
         ...queryParams,
       },
       callback: res => {
@@ -80,7 +98,7 @@ export default class TableInit extends React.Component {
   }
 
   //表格筛选
-  handleTableChange = (pagination, filters, sorter) => {
+  handleTableChange = (pagination: any) => {
     Storage.set(ENV.storagePagesize, pagination.pageSize);
     this.queryList({
       ...this.state.queryParams,
@@ -107,7 +125,6 @@ export default class TableInit extends React.Component {
             pageSize: queryParams.per_page,
             hideOnSinglePage: false,
             showSizeChanger: true,
-            showTotalText: true,
             showTotal: () => (
               <TableShowTotal
                 total={total}

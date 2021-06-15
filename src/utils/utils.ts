@@ -1,6 +1,6 @@
 import { parse } from 'qs';
 
-export function isUrl(path) {
+export function isUrl(path: string) {
   const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
   return reg.test(path);
 }
@@ -14,12 +14,12 @@ export function getPageQuery() {
 }
 
 //字段错误校验
-export function hasErrors(fieldsError) {
+export function hasErrors(fieldsError: any) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
 //校验密码强度
-export function checkPsdLevel(value) {
+export function checkPsdLevel(value: string) {
   // 0： 表示第一个级别， 1：表示第二个级别， 2：表示第三个级别， 3： 表示第四个级别， 4：表示第五个级别
   let modes = 0;
   if (value.length < 8) {

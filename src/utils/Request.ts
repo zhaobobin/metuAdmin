@@ -25,7 +25,7 @@ const codeMessage = {
   504: '网关超时',
 };
 
-function checkStatus(response) {
+function checkStatus(response: any) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -38,7 +38,7 @@ function checkStatus(response) {
 
   const error = new Error(response.statusText);
   error.name = response.status;
-  error.response = response;
+  error['response'] = response;
   throw error;
 }
 
@@ -49,7 +49,7 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function Request(url, options) {
+export default function Request(url: string, options?: any) {
   url = ENV.api_base + url;
 
   const newOptions = options;
@@ -103,7 +103,7 @@ export default function Request(url, options) {
     });
 }
 
-export function FetchGet(url) {
+export function FetchGet(url: string) {
   let option = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
