@@ -47,6 +47,7 @@ export default {
         params => Request('/user/login', { method: 'POST', body: params }),
         payload
       );
+      console.log(res)
       yield callback(res);
 
       // Login successfully
@@ -79,6 +80,7 @@ export default {
             return;
           }
         }
+        console.log(redirect)
         yield put(routerRedux.replace(redirect || '/'));
       } else {
         notification.error({

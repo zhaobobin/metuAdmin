@@ -79,7 +79,7 @@ export default class UserList extends React.Component {
       };
     }
     this.props.dispatch({
-      type: 'global/post',
+      type: 'global/request',
       url: api,
       payload: data,
       callback: res => {
@@ -104,7 +104,7 @@ export default class UserList extends React.Component {
     let { apiDel } = this.state;
 
     this.props.dispatch({
-      type: 'global/post',
+      type: 'global/request',
       url: apiDel,
       payload: {
         id,

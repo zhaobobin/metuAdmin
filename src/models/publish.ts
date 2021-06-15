@@ -1,6 +1,5 @@
 import { Model, Effect } from 'dva';
 import { Reducer } from 'redux';
-import request from '@/utils/Request';
 import { PublishType, IPhotoPublishForm, IArticlePublishForm, IImageSchema } from '@/types/PublishTypes';
 
 export interface IPublishState {

@@ -170,61 +170,60 @@ class BasicLayout extends React.PureComponent {
     const routerConfig = this.getRouterAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const pageTitle = this.getPageTitle(pathname, breadcrumbNameMap);
-
+    if (loading) {
+      return <PageLoading />;
+    }
+    if (!isAuth) {
+      return <Redirect to="/user/login" />;
+    }
     return (
       <React.Fragment>
-        {loading ? (
-          <PageLoading />
-        ) : isAuth ? (
-          <DocumentTitle title={pageTitle}>
-            <ContainerQuery query={query}>
-              {params => (
-                <Context.Provider value={this.getContext()}>
-                  <div className={classNames(params)}>
-                    <Layout>
-                      {isTop && !isMobile ? null : (
-                        <SiderMenu
-                          logo={logo}
-                          theme={navTheme}
-                          onCollapse={this.handleMenuCollapse}
-                          menuData={menuData}
-                          isMobile={isMobile}
-                          {...this.props}
-                        />
-                      )}
-                      <Layout
-                        style={{
-                          ...this.getLayoutStyle(),
-                          minHeight: '100vh',
-                        }}
-                      >
-                        <Header
-                          menuData={menuData}
-                          handleMenuCollapse={this.handleMenuCollapse}
-                          logo={logo}
-                          isMobile={isMobile}
-                          {...this.props}
-                        />
-                        <Content className={styles.content} style={contentStyle}>
-                          <Authorized authority={routerConfig} noMatch={<p>Exception403</p>}>
-                            <GlobalContent>
-                              <PageHeaderWrapper title={pageTitle.split(' - ')[0]}>
-                                {children}
-                              </PageHeaderWrapper>
-                            </GlobalContent>
-                          </Authorized>
-                        </Content>
-                        <Footer />
-                      </Layout>
+        <DocumentTitle title={pageTitle}>
+          <ContainerQuery query={query}>
+            {params => (
+              <Context.Provider value={this.getContext()}>
+                <div className={classNames(params)}>
+                  <Layout>
+                    {isTop && !isMobile ? null : (
+                      <SiderMenu
+                        logo={logo}
+                        theme={navTheme}
+                        onCollapse={this.handleMenuCollapse}
+                        menuData={menuData}
+                        isMobile={isMobile}
+                        {...this.props}
+                      />
+                    )}
+                    <Layout
+                      style={{
+                        ...this.getLayoutStyle(),
+                        minHeight: '100vh',
+                      }}
+                    >
+                      <Header
+                        menuData={menuData}
+                        handleMenuCollapse={this.handleMenuCollapse}
+                        logo={logo}
+                        isMobile={isMobile}
+                        {...this.props}
+                      />
+                      <Content className={styles.content} style={contentStyle}>
+                        <Authorized authority={routerConfig} noMatch={<p>Exception403</p>}>
+                          <GlobalContent>
+                            <PageHeaderWrapper title={pageTitle.split(' - ')[0]}>
+                              {children}
+                            </PageHeaderWrapper>
+                          </GlobalContent>
+                        </Authorized>
+                      </Content>
+                      <Footer />
                     </Layout>
-                  </div>
-                </Context.Provider>
-              )}
-            </ContainerQuery>
-          </DocumentTitle>
-        ) : (
-          <Redirect to="/user/login" />
-        )}
+                  </Layout>
+                </div>
+              </Context.Provider>
+            )}
+          </ContainerQuery>
+        </DocumentTitle>
       </React.Fragment>
     );
   }

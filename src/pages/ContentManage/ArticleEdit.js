@@ -30,7 +30,7 @@ export default class ArticleEdit extends React.Component {
 
   queryDetail(id) {
     this.props.dispatch({
-      type: 'global/post',
+      type: 'global/request',
       url: '/api/ArticleDetail',
       payload: {
         _id: id,

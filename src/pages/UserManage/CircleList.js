@@ -28,11 +28,6 @@ export default class CircleList extends React.Component {
       queryParams: {
         per_page: Storage.get('metu-pageSize') ? Storage.get('metu-pageSize') : 10,
       },
-      apiList: '/circles',
-      apiAdd: '/CircleAdd',
-      apiEdit: '/CircleUpdate',
-      apiDel: '/CircleDel',
-
       modalVisible: false,
       modalAction: '',
       pageTitle: '圈子',
@@ -51,7 +46,7 @@ export default class CircleList extends React.Component {
   };
 
   //添加
-  add = () => {
+  addCircle = () => {
     this.setState({
       modalVisible: true,
       modalAction: '添加',
@@ -89,8 +84,9 @@ export default class CircleList extends React.Component {
       };
     }
     this.props.dispatch({
-      type: 'global/post',
-      url: api,
+      type: 'global/request',
+      method: 'POST',
+      url: '/circles',
       payload: data,
       callback: res => {
         setTimeout(() => {
@@ -114,11 +110,10 @@ export default class CircleList extends React.Component {
     let { apiDel } = this.state;
 
     this.props.dispatch({
-      type: 'global/post',
-      url: apiDel,
-      payload: {
-        id,
-      },
+      type: 'global/request',
+      method: 'DELETE',
+      url: `/circles/${id}`,
+      payload: {},
       callback: res => {
         setTimeout(() => {
           this.ajaxFlag = true;
@@ -132,6 +127,7 @@ export default class CircleList extends React.Component {
 
   //modal回调
   modalCallback = values => {
+    console.log(values)
     if (values) {
       this.save(values);
     } else {
@@ -144,7 +140,7 @@ export default class CircleList extends React.Component {
 
   render() {
     const { currentUser } = this.props.global;
-    const { apiList, queryParams, modalVisible, modalAction, pageTitle, modalValues } = this.state;
+    const { queryParams, modalVisible, modalAction, pageTitle, modalValues } = this.state;
     const CircleCategoryOptions = Object.keys(CircleCategory).map(key => ({
       label: CircleCategory[key],
       value: key,
@@ -239,7 +235,7 @@ export default class CircleList extends React.Component {
           rules: [],
         },
         {
-          key: 'status',
+          key: 'category',
           label: '分类',
           type: 'Select',
           value: modalValues ? modalValues.category : undefined,
@@ -345,8 +341,8 @@ export default class CircleList extends React.Component {
 
         {currentUser.type === 'admin' ? (
           <div style={{ padding: '20px 0' }}>
-            <Button type="primary" onClick={this.add}>
-              添加{pageTitle}
+            <Button type="primary" onClick={this.addCircle}>
+              创建{pageTitle}
             </Button>
             <FormInit
               params={modalParams}
@@ -362,7 +358,7 @@ export default class CircleList extends React.Component {
         <TableInit
           onRef={ref => (this.tableInit = ref)}
           params={{
-            api: apiList,
+            api: '/circles',
             columns,
             queryParams,
           }}

@@ -11,7 +11,7 @@ const Storage = {
   },
 
   // 查询
-  get: function(key: string, exp: number) {
+  get: function(key: string, exp?: number) {
     const local = window.localStorage.getItem(key)
     let obj = window.JSON.parse(local as string);
     if (!obj || !obj.data) return false; //无记录
