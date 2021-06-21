@@ -59,7 +59,6 @@ class BasicLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-    // console.log(Storage.get(ENV.storageToken))
     if (!Storage.get(ENV.storageToken)) {
       this.props.dispatch(routerRedux.push('/user/login'));
       return;

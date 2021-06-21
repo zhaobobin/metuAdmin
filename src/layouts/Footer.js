@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Layout, Icon } from 'antd';
 import { GlobalFooter } from 'ant-design-pro';
-import ENV from '@/config/env';
+import { ENV } from '@/utils';
 
 const { Footer } = Layout;
 const FooterView = () => (

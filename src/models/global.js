@@ -96,7 +96,7 @@ export default {
         const res = yield call(params => {
           return Request('/user/token', { method: 'POST', body: params });
         }, payload);
-
+        
         if (res.code === 0) {
           yield put({
             type: 'changeLoginStatus',

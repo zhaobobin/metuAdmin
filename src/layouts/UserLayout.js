@@ -9,7 +9,7 @@ import logo from '@/assets/logo.png';
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> {ENV.company}
+    Copyright <Icon type="copyright" /> {ENV.info.company}
   </Fragment>
 );
 
